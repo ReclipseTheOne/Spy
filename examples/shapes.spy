@@ -1,0 +1,55 @@
+# Example Spy code demonstrating new syntax features
+
+interface Drawable {
+    def draw(x: int, y: int) -> None;
+    def get_bounds() -> tuple;
+}
+
+interface Colorable {
+    def set_color(color: str) -> None;
+    def get_color() -> str;
+}
+
+abstract class Shape(Drawable) {
+    def __init__(self) {
+        self.x = 0;
+        self.y = 0;
+    }
+
+    abstract def calculate_area() -> float;
+}
+
+final class Circle(Shape, Colorable) {
+    static PI = 3.14159;
+
+    def __init__(self, radius: float) {
+        super().__init__();
+        self.radius = radius;
+        self.color = "black";
+    }
+
+    def draw(self, x: int, y: int) -> None {
+        print(f"Drawing circle at ({x}, {y})");
+    }
+
+    def get_bounds(self) -> tuple {
+        return (self.x - self.radius, self.y - self.radius,
+                self.x + self.radius, self.y + self.radius);
+    }
+
+    def calculate_area(self) -> float {
+        return Circle.PI * self.radius ** 2;
+    }
+
+    def set_color(self, color: str) -> None {
+        self.color = color;
+    }
+
+    def get_color(self) -> str {
+        return self.color;
+    }
+
+    static def from_diameter(diameter: float) -> Circle {
+        return Circle(diameter / 2);
+    }
+}
